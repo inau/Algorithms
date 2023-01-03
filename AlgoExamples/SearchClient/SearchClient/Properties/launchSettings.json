@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SearchClient": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
