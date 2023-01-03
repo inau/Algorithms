@@ -26,7 +26,10 @@
                 Realtime Search
             </CheckBox>
         </StackPanel>
-        <Button Margin="10" Grid.Column="1" Click="Button_Click">LOAD VALUES FROM FILE</Button>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" >
+            <Button Margin="10" Click="Button_Click">LOAD VALUES FROM FILE</Button>
+            <Button Margin="10" Click="Button_Click_view">View graph</Button>
+        </StackPanel>
         <ListView Margin="5" x:Name="FileListViewFiltered" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

@@ -34,20 +34,33 @@ namespace SearchClient
             InitializeComponent();
         }
 
-        List<string> stringsFromFile = new List<string>();
+        private void Button_Click_view(object sender, RoutedEventArgs e)
+        {
+            GraphWindow window = new GraphWindow();
+            var svg = trie?.to_svg_file();
+            if(svg != null && svg != "")
+            {
+
+               window.LoadSvg(System.IO.Path.GetFullPath(svg));
+            }
+            window.ShowDialog();
+            window.Close();
+        }
+
+        ObservableCollection<string> stringsFromFile = new ObservableCollection<string>();
         private void Button_Click(object sender, RoutedEventArgs e) // load
         {
             trie = new TernaryTrie();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
+                stringsFromFile.Clear();
                 foreach (var str in File.ReadLines(openFileDialog.FileName))
                 {
                     stringsFromFile.Add(str);
                     trie.Add(str);
                 }
                 FileListView.ItemsSource = stringsFromFile;
-
                 ulong trieSize = trie.Size();
                 System.Diagnostics.Trace.WriteLine($"Read {stringsFromFile?.Count ?? 0} from file, added {trieSize} to trie");
             }

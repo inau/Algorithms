@@ -29,6 +29,11 @@ namespace Algs { namespace Common {
 
 		template<class Base, class Derived, typename... Args>
 		Base* spawnNode(unsigned int idx, Args... args);
+
+		std::wstring EscapeSpecial(std::wstring og)
+		{
+			return L"\"" + og + L"\"";
+		}
 	};
 
 
@@ -82,7 +87,7 @@ namespace Algs { namespace Common {
 	std::wstring BaseNode<nSize>::output_dot_notation(std::wstringstream& os)
 	{
 		// node id and label
-		os << m_nodeID << L"[label=" << m_nodeLabel << L" style=" << (m_hasValue ? L"\"filled\"" : L"\"\"") << L"] " << std::endl;
+		os << m_nodeID << L"[label=" << EscapeSpecial(m_nodeLabel) << L" style=" << (m_hasValue ? L"\"filled\"" : L"\"\"") << L"] " << std::endl;
 		
 		// process children
 		std::vector<std::wstring> _children;

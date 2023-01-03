@@ -26,6 +26,9 @@ namespace CppInterop
 
             [DllImport(DLLName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
             static public extern void Search(IntPtr pClassNameObject, string text, IntPtr resultContainer);
+
+            [DllImport(DLLName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+            static public extern IntPtr ToDotString(IntPtr pClassNameObject);
         }
 
         public static class Result

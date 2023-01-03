@@ -1,6 +1,8 @@
 ﻿using CppDLL.Managed;
+using Rubjerg.Graphviz;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace CppInterop.Managed
@@ -9,7 +11,7 @@ namespace CppInterop.Managed
     {
         protected IntPtr _triePointer = IntPtr.Zero;
         protected IntPtr _resultPointer = IntPtr.Zero;
-
+        protected string _graphRepresentation = "";
         protected override void AllocatePointer()
         {
             _triePointer = CppDLL.Trie.CreateTrieObject();
@@ -50,9 +52,17 @@ namespace CppInterop.Managed
             return result;
         }
 
-        public string to_dot_string()
+        public string to_svg_file()
         {
-            return "";
+            const string file = "out.svg";
+            IntPtr dotStr = CppDLL.Trie.ToDotString(_triePointer);
+            _graphRepresentation = Marshal.PtrToStringUni(dotStr);
+
+            RootGraph root = RootGraph.FromDotString(_graphRepresentation);
+            root.ComputeLayout();
+            root.ToSvgFile(file);
+            bool e = File.Exists(file);
+            return e ? file : "";
         }
     }
 }
